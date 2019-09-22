@@ -1,0 +1,22 @@
+{
+  "name": "e7n-aws-translate",
+  "version": "1.0.0",
+  "description": "Scripts for loading Chrome extension messages.json files and generating translations.",
+  "main": "dist/index.js",
+  "files": [
+    "dist/",
+    "bin/"
+  ],
+  "author": "Peter Coles <peter@mrcoles.com>",
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "tsc",
+    "watch": "npm run build -- -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.5",
+    "typescript": "^3.6.3"
+  }
+}
