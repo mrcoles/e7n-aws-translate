@@ -161,6 +161,9 @@ const updateAll = async (
   const files = await readdir(localesPath);
 
   for (let targetLang of files) {
+    if (targetLang === defaultLang) {
+      continue;
+    }
     const targetFile = join(localesPath, targetLang, "messages.json");
     if (verbose) {
       console.log(
