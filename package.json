@@ -1,7 +1,7 @@
 {
   "name": "e7n-aws-translate",
   "version": "1.0.0",
-  "description": "Scripts for loading Chrome extension messages.json files and generating translations.",
+  "description": "A script for loading Chrome extension messages.json files and generating translations.",
   "main": "dist/index.js",
   "files": [
     "dist/",
