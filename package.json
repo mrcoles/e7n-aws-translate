@@ -9,6 +9,9 @@
   ],
   "author": "Peter Coles <peter@mrcoles.com>",
   "license": "MIT",
+  "bin": {
+    "e7n-aws-translate": "bin/cli.js"
+  },
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc",
@@ -16,10 +19,15 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "@types/lodash.clonedeep": "^4.5.6",
     "@types/node": "^12.7.5",
+    "@types/yargs": "^13.0.2",
     "typescript": "^3.6.3"
   },
   "dependencies": {
-    "aws-sdk": "^2.533.0"
+    "aws-sdk": "^2.533.0",
+    "lodash.clonedeep": "^4.5.0",
+    "moment": "^2.24.0",
+    "yargs": "^14.0.0"
   }
 }

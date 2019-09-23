@@ -1,59 +1,58 @@
 import AWS from "aws-sdk";
-import { readFile as _readFile } from "fs";
-import { promisify } from "util";
 
-const readFile = promisify(_readFile);
+import clonedeep from "lodash.clonedeep";
+import moment from "moment";
+import { Messages } from "./types";
 
 AWS.config.apiVersions = {
   translate: "2017-07-01"
 };
 
+AWS.config.update({ region: "us-east-1" });
+
 const translate = new AWS.Translate();
 
-type Placeholder = {
-  content: string; // e.g., "$1"
-  example: string; // e.g., "https://developer.mozilla.org"
-};
-
-type Message = {
-  message: string;
-  description: string;
-  not_found?: boolean;
-  placeholders?: {
-    [placeholder_name: string]: Placeholder;
-  };
-};
-
-type Messages = {
-  [message_key: string]: Message;
-};
-
-const main = async (
-  sourceFile: string,
+export const enterMissingTranslations = async (
+  sourceData: Messages,
   sourceLang: string,
-  targetFile: string,
+  targetData: Messages,
   targetLang: string
 ) => {
-  const sourceContent = await readFile(sourceFile, "utf8");
-  const targetContent = await readFile(targetFile, "utf8");
+  const newTargetData = clonedeep(targetData);
 
-  const sourceData = JSON.parse(sourceContent) as Messages;
-  const targetData = JSON.parse(targetContent) as Messages;
-
+  // identify missing keys in target
   const uniqueToSource = new Set<string>();
 
-  Object.keys(sourceData).forEach(key => {
-    // console.log(`${key} ?? ${targetData[key]}`); //REMM
-    if (!targetData[key]) {
+  Object.entries(sourceData).forEach(([key, data]) => {
+    if (!data.message) {
+      throw new Error(`Bad source data for ${key}: ${JSON.stringify(data)}`);
+    }
+    if (!targetData[key] || !targetData[key].message) {
       uniqueToSource.add(key);
     }
   });
 
+  // perform translations
   console.log("CHECK?", Array.from(uniqueToSource).length); //REMM
 
   for (let key of uniqueToSource) {
-    console.log("key", key); //REMMM
+    console.log("key", key); //REMM
+
+    const { message, placeholders } = sourceData[key];
+
+    const resp = await getTranslation(message, sourceLang, targetLang);
+    const text = resp.TranslatedText;
+
+    newTargetData[key] = {
+      message: text,
+      description: `[aws:${timestamp()}] ${message}`,
+      placeholders
+    };
+
+    await sleep(500);
   }
+
+  return newTargetData;
 };
 
 // Helpers
@@ -72,16 +71,9 @@ const getTranslation = async (
   return translate.translateText(params).promise();
 };
 
-const sleep = <R extends any>(delay: number, ret: R): Promise<R> =>
+const sleep = <R extends any>(delay: number, ret?: R): Promise<R> =>
   new Promise(resolve => {
     setTimeout(() => resolve(ret), delay);
   });
 
-// Run
-
-main(
-  "../src/_locales/en/messages.json",
-  "en",
-  "../src/_locales/es/messages.json",
-  "es"
-).catch(console.error);
+const timestamp = () => moment.utc().format("YYYY-MM-DD kk:mm:ss");
