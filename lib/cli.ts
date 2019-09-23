@@ -24,13 +24,14 @@ const main = async () => {
           .demand("sourceLang")
           .demand("targetFile")
           .demand("targetLang")
-          .option("verbose", { alias: "v", type: "boolean" }),
+          .option("verbose", { alias: "v", type: "boolean", default: false }),
       argv => {
         addTranslations(
           argv.sourceFile,
           argv.sourceLang,
           argv.targetFile,
-          argv.targetLang
+          argv.targetLang,
+          argv.verbose
         )
           .then(resp => {
             if (argv.verbose) {
@@ -52,7 +53,8 @@ const addTranslations = async (
   sourceFile: string,
   sourceLang: string,
   targetFile: string,
-  targetLang: string
+  targetLang: string,
+  verbose: boolean
 ) => {
   const sourceContent = await readFile(sourceFile, "utf8");
 
@@ -74,7 +76,8 @@ const addTranslations = async (
     sourceData,
     sourceLang,
     targetData,
-    targetLang
+    targetLang,
+    verbose
   );
 
   await writeFile(targetFile, JSON.stringify(newData, null, 2), "utf8");

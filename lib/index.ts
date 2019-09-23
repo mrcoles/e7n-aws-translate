@@ -16,7 +16,8 @@ export const enterMissingTranslations = async (
   sourceData: Messages,
   sourceLang: string,
   targetData: Messages,
-  targetLang: string
+  targetLang: string,
+  verbose?: boolean
 ) => {
   const newTargetData = clonedeep(targetData);
 
@@ -33,10 +34,14 @@ export const enterMissingTranslations = async (
   });
 
   // perform translations
-  console.log("CHECK?", Array.from(uniqueToSource).length); //REMM
+  if (verbose) {
+    console.log("CHECK?", Array.from(uniqueToSource).length);
+  }
 
   for (let key of uniqueToSource) {
-    console.log("key", key); //REMM
+    if (verbose) {
+      console.log("key", key);
+    }
 
     const { message, placeholders } = sourceData[key];
 
