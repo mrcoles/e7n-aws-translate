@@ -92,9 +92,7 @@ const addTranslations = async (
   return filteredNewData;
 };
 
-if (require.main === module) {
-  main().catch(err => {
-    console.error(err);
-    process.exit(err.code || 1);
-  });
-}
+main().catch(err => {
+  console.error(err);
+  process.exit(err.code || 1);
+});
