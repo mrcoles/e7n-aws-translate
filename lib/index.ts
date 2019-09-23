@@ -35,7 +35,7 @@ export const enterMissingTranslations = async (
 
   // perform translations
   if (verbose) {
-    console.log("CHECK?", Array.from(uniqueToSource).length);
+    console.log("New messages found?", Array.from(uniqueToSource).length);
   }
 
   for (let key of uniqueToSource) {
