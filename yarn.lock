@@ -37,10 +37,10 @@ ansi-styles@^3.2.0:
     color-convert "^1.9.0"
 
 aws-sdk@^2.533.0:
-  version "2.533.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.533.0.tgz#69298d2e6c646ce5cb5ba2bf414c9e53ec3f7761"
+  version "2.814.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.814.0.tgz#7a1c36006e0b5826f14bd2511b1d229ef6814bb0"
   dependencies:
-    buffer "4.9.1"
+    buffer "4.9.2"
     events "1.1.1"
     ieee754 "1.1.13"
     jmespath "0.15.0"
@@ -54,9 +54,9 @@ base64-js@^1.0.2:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.1.tgz#58ece8cb75dd07e71ed08c736abc5fac4dbf8df1"
 
-buffer@4.9.1:
-  version "4.9.1"
-  resolved "https://registry.yarnpkg.com/buffer/-/buffer-4.9.1.tgz#6d1bb601b07a4efced97094132093027c95bc298"
+buffer@4.9.2:
+  version "4.9.2"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-4.9.2.tgz#230ead344002988644841ab0244af8c44bbe3ef8"
   dependencies:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
